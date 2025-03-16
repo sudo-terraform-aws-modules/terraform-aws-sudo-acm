@@ -1,4 +1,4 @@
-resource "aws_acm_certificate" "acm_cert_cloudfront" {
+resource "aws_acm_certificate" "acm_cert" {
 
   domain_name               = var.domain_name
   validation_method         = "DNS"
@@ -12,9 +12,12 @@ locals {
 
 }
 data "aws_route53_zone" "route53_acm_validation_zone" {
+  provider = aws.route53
+
   name         = local.zone_name
 }
 resource "aws_route53_record" "route53_acm_validation" {
+  provider = aws.route53
 
   for_each = {
     for dvo in aws_acm_certificate.acm_cert_cloudfront.domain_validation_options : dvo.domain_name => {
