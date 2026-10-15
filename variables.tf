@@ -1,16 +1,22 @@
 variable "domain_name" {
   type        = string
-  description = "Specify the domain for ACM"
+  description = "Primary domain name for the ACM certificate."
 }
 
 variable "subject_alternative_names" {
   type        = list(string)
-  description = "Specify the alternative names for ACM"
-  default     = null
+  description = "(Optional) Additional domain names to include in the certificate."
+  default     = []
 }
 
 variable "zone_name" {
   type        = string
-  description = "Specify the zone name for Route53"
-  default     = ""
+  description = "(Optional) Route53 hosted zone name for DNS validation. Defaults to domain_name."
+  default     = null
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "(Optional) Map of tags to apply to all resources."
+  default     = {}
 }
